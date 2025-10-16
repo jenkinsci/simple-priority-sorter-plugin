@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+    Allow to set basic job priorities to change the build queue order and ensure most important jobs are built first.
+</div>
