@@ -2,8 +2,7 @@ package io.jenkins.plugins.simpleprioritysorter;
 
 import hudson.Extension;
 import hudson.model.Job;
-import hudson.model.JobProperty;
-import hudson.model.JobPropertyDescriptor;
+import jenkins.model.OptionalJobProperty;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
@@ -12,24 +11,18 @@ import org.kohsuke.stapler.DataBoundSetter;
  * A simple job property to hold a priority value.
  */
 @Extension
-public class BasicPriorityProperty extends JobProperty<Job<?, ?>> {
+public class BasicPriorityProperty extends OptionalJobProperty<Job<?, ?>> {
 
     /**
      * The priority value for the job.
      */
     private int priority;
 
-    /**
-     * Whether to use priority sorting for this job.
-     */
-    private boolean usePriority;
-
+    @DataBoundConstructor
     public BasicPriorityProperty() {}
 
-    @DataBoundConstructor
-    public BasicPriorityProperty(int priority) {
+    BasicPriorityProperty(int priority) {
         this.priority = priority;
-        this.usePriority = true;
     }
 
     @DataBoundSetter
@@ -41,18 +34,9 @@ public class BasicPriorityProperty extends JobProperty<Job<?, ?>> {
         return priority;
     }
 
-    @DataBoundSetter
-    public void setUsePriority(boolean usePriority) {
-        this.usePriority = usePriority;
-    }
-
-    public boolean isUsePriority() {
-        return usePriority;
-    }
-
     @Extension
     @Symbol("basicJobPriority")
-    public static class DescriptorImpl extends JobPropertyDescriptor {
+    public static class DescriptorImpl extends OptionalJobPropertyDescriptor {
         @Override
         public String getDisplayName() {
             return "Basic Job Priority";
