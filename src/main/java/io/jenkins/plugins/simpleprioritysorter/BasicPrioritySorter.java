@@ -21,6 +21,9 @@ public class BasicPrioritySorter extends QueueSorter {
     }
 
     private int getPriority(Queue.BuildableItem item) {
+        if (!(item.task instanceof Job)) {
+            return DEFAULT_PRIORITY;
+        }
         Job<?, ?> job = (Job<?, ?>) item.task;
         BasicPriorityProperty prop = job.getProperty(BasicPriorityProperty.class);
         return prop != null ? prop.getPriority() : DEFAULT_PRIORITY;
